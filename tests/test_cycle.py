@@ -154,3 +154,14 @@ def test_main_auto_mode_picks_alert_before_close_and_confirm_after(tmp_path, cha
     assert "[alert] ok" in out and "ALL-IN lottery sizing" in out
     run.main(["auto", "--root", str(tmp_path), "--dry"], svc=make_svc(et(2026, 11, 12, 16, 26), bars, chain_rows))
     assert "[confirm] ok" in capsys.readouterr().out
+
+
+def test_ping_posts_once_and_writes_nothing(tmp_path, chain_rows, monkeypatch, capsys):
+    sent = []
+    import bot.notify as n
+    class R: status_code = 204
+    monkeypatch.setattr(n.requests, "post", lambda url, json=None, timeout=None: sent.append(json["content"]) or R())
+    monkeypatch.setenv("DISCORD_WEBHOOK_URL", "https://discord.test/hook")
+    assert run.main(["ping", "--root", str(tmp_path)], svc=make_svc(et(2026, 11, 13, 12, 0), load_bars(), chain_rows)) == 0
+    assert len(sent) == 1 and "ping" in sent[0] and "Cboe chain: OK" in sent[0] and "13:50 MT" in sent[0]
+    assert not os.path.exists(os.path.join(str(tmp_path), "state", "state.json")) and not os.path.exists(os.path.join(str(tmp_path), "ledger", "trades.csv"))

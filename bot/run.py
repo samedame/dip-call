@@ -278,6 +278,28 @@ def run_confirm(svc, cfg):
     return "ok"
 
 
+def run_ping(svc, cfg):
+    """Plumbing check: posts one line to Discord and reports which services answer. Writes nothing."""
+    from . import __version__
+    now = svc.now()
+    checks = []
+    for name, fn in (("Yahoo daily bars", lambda: svc.bars()["date"][-1]), ("Yahoo VIX", lambda: svc.vols()["v30"]), ("Cboe chain", lambda: len(svc.chain()[1]))):
+        try:
+            checks.append(f"{name}: OK ({fn()})")
+        except Exception as e:  # noqa: BLE001
+            checks.append(f"{name}: FAILED ({type(e).__name__})")
+    checks.append("Tradier: " + ("token set" + (f", env {cfg.tradier_env}" if cfg.tradier_env else "") if cfg.tradier_token else "no token (Cboe delayed quotes will be used)"))
+    checks.append(f"profile {cfg.profile}, account ${cfg.account_equity:,.0f}, min points for real-money lines {cfg.min_points_real}")
+    msg = f"**dip-call-bot v{__version__} ping** {now.strftime('%a %d %b %H:%M')} ET. " + " | ".join(checks) + " | Alerts post about 15:50 ET (13:50 MT) and 16:25 ET (14:25 MT) on trading days."
+    print(msg)
+    if cfg.webhook:
+        ok = post_discord(cfg.webhook, msg)
+        print("discord:", "posted" if ok else "FAILED")
+        return "ok" if ok else "discord failed"
+    print("discord: DISCORD_WEBHOOK_URL not set")
+    return "no webhook"
+
+
 def run_status(svc, cfg):
     state = ledger.load_state(cfg.root)
     print("Open positions:", state["positions"] or "none")
@@ -288,7 +310,7 @@ def run_status(svc, cfg):
 
 def main(argv=None, svc=None):
     ap = argparse.ArgumentParser(prog="dip-call-bot")
-    ap.add_argument("mode", choices=["alert", "confirm", "auto", "status"])
+    ap.add_argument("mode", choices=["alert", "confirm", "auto", "status", "ping"])
     ap.add_argument("--root", default=".")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--dry", action="store_true", help="print only: no Discord, no ledger or state writes")
@@ -305,7 +327,7 @@ def main(argv=None, svc=None):
             print("not a session"); return 0
         close = dt.datetime.combine(n.date(), nyse.close_time(n.date()), ET)
         mode = "alert" if n < close else "confirm"
-    res = {"alert": run_alert, "confirm": run_confirm, "status": run_status}[mode](svc, cfg)
+    res = {"alert": run_alert, "confirm": run_confirm, "status": run_status, "ping": run_ping}[mode](svc, cfg)
     print(f"[{mode}] {res}")
     return 0
 

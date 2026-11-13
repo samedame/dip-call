@@ -3,11 +3,16 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "alert | confirm | auto (auto = alert before the close, confirm after)"
+        description: "alert | confirm | auto (auto = alert before the close, confirm after) | ping (Discord and data check, writes nothing)"
         required: false
         default: auto
       force:
         description: "ignore the time window and the once-a-day guard"
+        type: boolean
+        required: false
+        default: false
+      dry:
+        description: "print only: no Discord post, no ledger or state writes"
         type: boolean
         required: false
         default: false
@@ -50,7 +55,7 @@ jobs:
           PROFILE: ${{ vars.PROFILE }}
           ACCOUNT_EQUITY: ${{ vars.ACCOUNT_EQUITY }}
           SPRINT_FRACTION: ${{ vars.SPRINT_FRACTION }}
-        run: python -m bot.run ${{ inputs.mode || 'auto' }} ${{ inputs.force && '--force' || '' }}
+        run: python -m bot.run ${{ inputs.mode || 'auto' }} ${{ inputs.force && '--force' || '' }} ${{ inputs.dry && '--dry' || '' }}
       - name: Commit ledger and state
         run: |
           git config user.name "dip-bot"
