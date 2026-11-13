@@ -1,0 +1,63 @@
+name: dip-bot
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "alert | confirm | auto (auto = alert before the close, confirm after)"
+        required: false
+        default: auto
+      force:
+        description: "ignore the time window and the once-a-day guard"
+        type: boolean
+        required: false
+        default: false
+      scheduled_for_et:
+        description: "set by the open-scheduler Worker"
+        required: false
+      trigger:
+        description: "set by the open-scheduler Worker"
+        required: false
+  schedule:
+    # Backup crons. The bot checks the real New York time itself, so the wrong-season copy of each cron is a harmless no-op.
+    - cron: "52 19 * * 1-5"   # 15:52 ET (EDT)
+    - cron: "52 20 * * 1-5"   # 15:52 ET (EST)
+    - cron: "27 20 * * 1-5"   # 16:27 ET (EDT)
+    - cron: "27 21 * * 1-5"   # 16:27 ET (EST)
+    - cron: "52 16 * * 1-5"   # 12:52 ET (EDT), early-close days only
+    - cron: "52 17 * * 1-5"   # 12:52 ET (EST), early-close days only
+    - cron: "27 17 * * 1-5"   # 13:27 ET (EDT), early-close days only
+    - cron: "27 18 * * 1-5"   # 13:27 ET (EST), early-close days only
+permissions:
+  contents: write
+concurrency:
+  group: dip-bot
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Run bot
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TRADIER_TOKEN: ${{ secrets.TRADIER_TOKEN }}
+          TRADIER_ENV: ${{ vars.TRADIER_ENV }}
+          PROFILE: ${{ vars.PROFILE }}
+          ACCOUNT_EQUITY: ${{ vars.ACCOUNT_EQUITY }}
+          SPRINT_FRACTION: ${{ vars.SPRINT_FRACTION }}
+        run: python -m bot.run ${{ inputs.mode || 'auto' }} ${{ inputs.force && '--force' || '' }}
+      - name: Commit ledger and state
+        run: |
+          git config user.name "dip-bot"
+          git config user.email "dip-bot@users.noreply.github.com"
+          git add state ledger
+          if ! git diff --cached --quiet; then
+            git commit -m "dip-bot: ledger update (run ${{ github.run_id }})"
+            git pull --rebase
+            git push
+          fi
