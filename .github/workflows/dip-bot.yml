@@ -22,16 +22,19 @@ on:
       trigger:
         description: "set by the open-scheduler Worker"
         required: false
+  # Primary trigger: the open-scheduler Worker (alert 15:50 ET, confirm 16:25 ET; first dispatch seen 2026-11-13 20:50 UTC).
+  # GitHub starts scheduled runs hours late on this account, so the daily alert crons behind the Worker were removed on
+  # 2026-11-13: a late alert run is always "outside the alert window". What is kept:
   schedule:
-    # Backup crons. The bot checks the real New York time itself, so the wrong-season copy of each cron is a harmless no-op.
-    - cron: "52 19 * * 1-5"   # 15:52 ET (EDT)
-    - cron: "52 20 * * 1-5"   # 15:52 ET (EST)
-    - cron: "27 20 * * 1-5"   # 16:27 ET (EDT)
-    - cron: "27 21 * * 1-5"   # 16:27 ET (EST)
-    - cron: "52 16 * * 1-5"   # 12:52 ET (EDT), early-close days only
-    - cron: "52 17 * * 1-5"   # 12:52 ET (EST), early-close days only
-    - cron: "27 17 * * 1-5"   # 13:27 ET (EDT), early-close days only
-    - cron: "27 18 * * 1-5"   # 13:27 ET (EST), early-close days only
+    # Confirm backup. A late confirm is still a valid confirm (it only needs the final bar); the once-a-day guard makes
+    # it a no-op when the Worker's 16:25 ET confirm already ran. 21:27 UTC is 16:27 EST / 17:27 EDT.
+    - cron: "27 21 * * 1-5"
+    # Early-close days, when the Worker's fixed 15:50 ET slot is after the 13:00 ET close. Pinned to the dates so they
+    # do not fire every weekday. UPDATE EACH YEAR (2026: Fri 27 Nov and Thu 24 Dec, both in standard time).
+    - cron: "52 17 27 11 *"   # 12:52 ET alert, 27 Nov
+    - cron: "27 18 27 11 *"   # 13:27 ET confirm, 27 Nov
+    - cron: "52 17 24 12 *"   # 12:52 ET alert, 24 Dec
+    - cron: "27 18 24 12 *"   # 13:27 ET confirm, 24 Dec
 permissions:
   contents: write
 concurrency:
