@@ -1,35 +1,37 @@
 {
- "equity": {},
+ "equity": {
+  "K1": 1429.25544
+ },
  "last": {
-  "alert": "2026-11-16",
+  "alert": "2026-11-17",
   "confirm": "2026-11-16"
  },
  "positions": {
   "K1": {
-   "ask_in": 1.05,
-   "ask_over_model": 1.221,
-   "bid_in": 1.02,
-   "contracts": 0.714,
-   "cost": 75.0,
-   "dd_in": -0.0319,
-   "entry_date": "2026-11-13",
-   "equity_before": 1500.0,
-   "exit_date_plan": "2026-11-17",
-   "expiry": "2026-11-20",
+   "ask_in": 1.5,
+   "ask_over_model": 0.981,
+   "bid_in": 1.46,
+   "contracts": 0.476,
+   "cost": 71.42,
+   "dd_in": -0.0631,
+   "entry_date": "2026-11-17",
+   "equity_before": 1429.26,
+   "exit_date_plan": "2026-11-19",
+   "expiry": "2026-11-24",
    "fraction": 0.05,
-   "listed_delta": 0.1492,
-   "model_ask": 0.8603,
+   "listed_delta": 0.1497,
+   "model_ask": 1.5284,
    "nfire_in": 1,
-   "occ": "SPY261120C00768000",
-   "points": 0,
+   "occ": "SPY261124C00753000",
+   "points": 2,
    "rule": "K1",
    "source_in": "cboe-delayed",
-   "spot_in": 752.55,
-   "spread_vs_house": 1.45,
-   "status": "confirmed",
-   "strike": 768.0,
+   "spot_in": 731.32,
+   "spread_vs_house": 1.35,
+   "status": "provisional",
+   "strike": 753.0,
    "tier": "N/A",
-   "vix_in": 19.35
+   "vix_in": 25.84
   },
   "S1": {
    "ask_in": 0.56,
