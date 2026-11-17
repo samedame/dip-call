@@ -4,7 +4,7 @@
  },
  "last": {
   "alert": "2026-11-17",
-  "confirm": "2026-11-16"
+  "confirm": "2026-11-17"
  },
  "positions": {
   "K1": {
@@ -13,7 +13,7 @@
    "bid_in": 1.46,
    "contracts": 0.476,
    "cost": 71.42,
-   "dd_in": -0.0631,
+   "dd_in": -0.0599,
    "entry_date": "2026-11-17",
    "equity_before": 1429.26,
    "exit_date_plan": "2026-11-19",
@@ -28,10 +28,10 @@
    "source_in": "cboe-delayed",
    "spot_in": 731.32,
    "spread_vs_house": 1.35,
-   "status": "provisional",
+   "status": "confirmed",
    "strike": 753.0,
    "tier": "N/A",
-   "vix_in": 25.84
+   "vix_in": 25.58
   },
   "S1": {
    "ask_in": 0.56,
