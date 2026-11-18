@@ -1,9 +1,10 @@
 {
  "equity": {
-  "K1": 1429.25544
+  "K1": 1429.25544,
+  "S1": 1434.33248
  },
  "last": {
-  "alert": "2026-11-17",
+  "alert": "2026-11-18",
   "confirm": "2026-11-17"
  },
  "positions": {
@@ -32,32 +33,6 @@
    "strike": 753.0,
    "tier": "N/A",
    "vix_in": 25.58
-  },
-  "S1": {
-   "ask_in": 0.56,
-   "ask_over_model": 1.063,
-   "bid_in": 0.54,
-   "contracts": 1.338,
-   "cost": 74.98,
-   "dd_in": -0.0502,
-   "entry_date": "2026-11-16",
-   "equity_before": 1500.0,
-   "exit_date_plan": "2026-11-18",
-   "expiry": "2026-11-23",
-   "fraction": 0.05,
-   "listed_delta": 0.0744,
-   "model_ask": 0.5267,
-   "nfire_in": 2,
-   "occ": "SPY261123C00765000",
-   "points": 3,
-   "rule": "S1",
-   "source_in": "cboe-delayed",
-   "spot_in": 739.14,
-   "spread_vs_house": 1.0,
-   "status": "confirmed",
-   "strike": 765.0,
-   "tier": "HIGH",
-   "vix_in": 23.05
   }
  }
 }

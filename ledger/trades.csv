@@ -1,2 +1,3 @@
 rule,entry_date,exit_date_plan,exit_date,late,occ,expiry,strike,listed_delta,contracts,fraction,equity_before,bid_in,ask_in,spot_in,model_ask,ask_over_model,spread_vs_house,source_in,cost,bid_out,spot_out,source_out,proceeds,pnl,ret,equity_after,points,tier,vix_in,dd_in,nfire_in
 K1,2026-11-13,2026-11-17,2026-11-17,0,SPY261120C00768000,2026-11-20,768.0,0.1492,0.714,0.05,1500.0,1.02,1.05,752.55,0.8603,1.221,1.45,cboe-delayed,75.0,0.06,731.32,cboe-delayed,4.26,-70.74,-0.9433,1429.26,0,N/A,19.35,-0.0319,1
+S1,2026-11-16,2026-11-18,2026-11-18,0,SPY261123C00765000,2026-11-23,765.0,0.0744,1.338,0.05,1500.0,0.54,0.56,739.14,0.5267,1.063,1.0,cboe-delayed,74.98,0.07,729.88,cboe-delayed,9.31,-65.67,-0.8758,1434.33,3,HIGH,23.05,-0.0502,2
