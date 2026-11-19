@@ -5,7 +5,7 @@
  },
  "last": {
   "alert": "2026-11-19",
-  "confirm": "2026-11-18"
+  "confirm": "2026-11-19"
  },
  "positions": {
   "K1": {
@@ -14,7 +14,7 @@
    "bid_in": 1.65,
    "contracts": 0.403,
    "cost": 68.12,
-   "dd_in": -0.079,
+   "dd_in": -0.0811,
    "entry_date": "2026-11-19",
    "equity_before": 1363.06,
    "exit_date_plan": "2026-11-23",
@@ -29,10 +29,10 @@
    "source_in": "cboe-delayed",
    "spot_in": 716.59,
    "spread_vs_house": 1.2,
-   "status": "provisional",
+   "status": "confirmed",
    "strike": 741.0,
    "tier": "N/A",
-   "vix_in": 28.41
+   "vix_in": 28.89
   },
   "K2": {
    "ask_in": 5.95,
@@ -40,7 +40,7 @@
    "bid_in": 5.89,
    "contracts": 0.391,
    "cost": 232.66,
-   "dd_in": -0.079,
+   "dd_in": -0.0811,
    "entry_date": "2026-11-19",
    "equity_before": 1500.0,
    "exit_date_plan": "2026-11-23",
@@ -55,10 +55,10 @@
    "source_in": "cboe-delayed",
    "spot_in": 716.59,
    "spread_vs_house": 0.51,
-   "status": "provisional",
+   "status": "confirmed",
    "strike": 735.0,
    "tier": "HIGH",
-   "vix_in": 28.41
+   "vix_in": 28.89
   },
   "S1": {
    "ask_in": 0.65,
@@ -66,7 +66,7 @@
    "bid_in": 0.64,
    "contracts": 1.103,
    "cost": 71.74,
-   "dd_in": -0.079,
+   "dd_in": -0.0811,
    "entry_date": "2026-11-19",
    "equity_before": 1434.33,
    "exit_date_plan": "2026-11-23",
@@ -81,10 +81,10 @@
    "source_in": "cboe-delayed",
    "spot_in": 716.59,
    "spread_vs_house": 0.5,
-   "status": "provisional",
+   "status": "confirmed",
    "strike": 749.0,
    "tier": "HIGH",
-   "vix_in": 28.41
+   "vix_in": 28.89
   }
  }
 }
